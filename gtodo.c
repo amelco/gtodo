@@ -64,8 +64,14 @@ int main()
     SetTargetFPS(30);
 
     sqlite3 *db;
-    char* conn_string = "tmp.db";
+    char* conn_string = "db_ceman.db";
     if (sql_open(conn_string, &db) == ERROR) {
+        TraceLog(LOG_INFO, "Error: %s", sql_get_errormsg());
+        exit(3440);
+    }
+
+    char response[1024];
+    if (sql_read(db, "select * from instituicao", &response[0]) == ERROR) {
         TraceLog(LOG_INFO, "Error: %s", sql_get_errormsg());
         exit(3440);
     }
